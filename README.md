@@ -8,7 +8,7 @@ Files の中から自分の環境に適したインストーラをダウンロ�
 
 - Windows 64bit の場合  
 Windows x86-64 executable installer
-- Windows 32bit の場合  
+- Windows 32bit 場合  
 Windows x86 executable installer
 
 インストーラを起動します。  
@@ -117,7 +117,7 @@ for val in data:
         count += 1
         result = count
 
-print(count)
+print(result)
 ```
 data の中の 0 の数を数えるコードですが、count という変数が違う階層で扱われ、結果が上書きされています。for や if はスコープを作らないため、見た目ではネストされ階層が下がっていても扱えてしまうわけです。  
 これもまたチームでの開発では厄介な仕様です。変数の変化を階層が違う部分まで意識して修正を行うのは大変なことです。  
