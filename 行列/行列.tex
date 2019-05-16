@@ -1,0 +1,263 @@
+\documentclass[a4paper,12pt]{jreport}
+\usepackage{ascmac}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{amsthm}
+\usepackage{blkarray}
+\usepackage{latexsym}
+\usepackage[dvipdfmx]{graphicx}
+\usepackage{tikz}
+\usetikzlibrary{arrows.meta}
+\usetikzlibrary{intersections,calc}
+\newcounter{nombre}
+
+\makeatletter
+\def\Left#1#2\Right{\begingroup%
+   \def\ts@r{\nulldelimiterspace=0pt \mathsurround=0pt}%
+   \let\@hat=#1%
+   \def\sht@im{#2}%
+   \def\@t{{\mathchoice{\def\@fen{\displaystyle}\k@fel}%
+          {\def\@fen{\textstyle}\k@fel}%
+          {\def\@fen{\scriptstyle}\k@fel}%
+          {\def\@fen{\scriptscriptstyle}\k@fel}}}%
+   \def\g@rin{\ts@r\left\@hat\vphantom{\sht@im}\right.}%
+   \def\k@fel{\setbox0=\hbox{$\@fen\g@rin$}\hbox{%
+      $\@fen \kern.3875\wd0 \copy0 \kern-.3875\wd0%
+      \llap{\copy0}\kern.3875\wd0$}}%
+      \def\pt@h{\mathopen\@t}\pt@h\sht@im%
+      \Right}%
+\def\Right#1{\let\@hat=#1%
+   \def\st@m{\mathclose\@t}%
+   \st@m\endgroup}
+\makeatother
+
+\def \tp {{\rm tp}}
+\def \stp{{\rm stp}}
+\def \acl {{\rm acl}}
+\def \dcl {{\rm dcl}}
+\def \cl {{\rm cl}}
+\def \ccl {{\rm ccl}}
+
+\def \dom {{\rm dom}}
+\def \ran {{\rm ran}}
+\def \ind {\mathop{\smile \hskip -0.9em ^| \ }}
+\def \dep {\mathop{\not \!\! \ind}}
+\def \non-ort {{\not\!\!\bot}}
+\def \domeq {\sqsubseteq\!\!\!\!\sqsupseteq}
+
+\def \Th {{\rm Th}}
+\def \RM {{\rm RM}}
+\def \Z  {{\mathbb Z}}
+\def \N {{\mathbb N}}
+\def \Q {{\mathbb Q}}
+\def \R {{\mathbb R}}
+\def \C {{\mathbb C}}
+\def \M {{\cal M}}
+\def \U {{\rm U}}
+\def \S#1 {{\rm S}#1 }
+\def \lh{{\rm lh}}
+
+\def \ob {{\rm Ob}}
+\def \id {{\rm id}}
+
+\def \imp {{\Rightarrow}}
+\def \notequiv {{\hskip 0.1em \not\hskip -0.1em \leftrightarrow}}
+\def \tie{ \,{\widehat { \ }}\, }
+
+\def\proclaim #1. #2\par{\medbreak
+  \noindent{\bf#1 \enspace}{\sl#2}\par
+  \ifdim\lastskip<\medskipamount \removelastskip\penalty55\medskip\fi}
+\renewcommand\thefootnote{*\arabic{footnote}}
+\newtheorem{theo}{Theorem}[section]
+\newtheorem{coro}[theo]{Corollary}
+\newtheorem{prop}[theo]{Proposition}
+\newtheorem{rem}[theo]{Remark}
+\newtheorem{exam}[theo]{example}
+\newtheorem{exer}[theo]{Exercise}
+\newtheorem{lem}[theo]{Lemma}
+\newtheorem{fact}{fact}
+\newtheorem{claim}{Claim}[theo]
+\newtheorem{problem}{問}[chapter]
+\renewcommand{\theclaim}{\Alph{claim}}
+\renewcommand{\thefact}{}
+\newtheorem{shelah}{Shelah's conjecture}
+\theoremstyle{definition}
+\newtheorem{defi}{Definition}[section]
+\newcommand{\prob}[1][]{\refstepcounter{nombre}#1(\thenombre)}
+\newcommand{\ang}[1]{#1^\circ}
+\renewcommand{\theshelah}{}
+
+\title{行列について}
+\author{中川路 玄哉}
+
+\begin{document}
+   \maketitle
+   \tableofcontents
+   \chapter{行列とは？}
+   \section{座標平面の復習}
+   Sさん「先生、行列ってなんですか？」\\
+
+   T先生「行列は線型空間から線形空間への写像だね.」\\
+   
+   Sさん「は？…ちょっとよくわかりません. もうちょっとわかる言葉で教えてください.」\\
+
+   T先生「うーん, ちなみにSさんはベクトルは知っているのかい？」\\
+
+   Sさん「ベクトル…言葉ぐらいは聞いたことあります.」\\
+
+   T先生「そうか, じゃあベクトルはやめて座標平面を例にあげよう.」\\
+
+   Sさん「座標平面っていうと, あの$x$座標$y$座標っていうやつですか？」\\
+
+   T先生「そうだね. 少し復習しようか. まずは座標$(2, 3)$を$x$軸方向に$1$, $y$軸方向に$2$平行移動した点は？」\\
+
+   Sさん「$(3, 5)$です！」\\
+
+   T先生「正解！じゃあ, 座標$(1, 2)$を原点から見た方向はそのままに, 原点からの距離を2倍した位置の座標は？」\\
+
+   Sさん「えーと, 両方を2倍して, $(2, 4)$でしょうか.」\\
+
+   T先生「よく出来てるよ. じゃあ次はちょっと難しく, 座標$(2,2)$を原点からの距離はそのままで, 時計と反対回りに$\ang{60}$回転させた位置の座標は？」\\
+
+   Sさん「え！？うーん, わかりません...」\\
+
+   T先生「ちょっと難しかったね. わからなくても全然大丈夫だよ.」\\
+
+   少し座標平面の復習をしましょう.
+   まず最初に抑えておいて欲しいのが, 平行移動です.
+   T先生とSさんの例のように"$x$軸方向に$1$, $y$軸方向に$2$移動させる"という操作は座標$(2, 3)$を座標$(3, 5)$に平行移動させます.
+   
+   これは, 具体的な数字じゃなくても同じことが言えます.
+   上記操作は座標$(x, y)$を$(x+1, y+2)$に平行移動させるわけです.
+   
+   具体的な数字である必要がないということは, 関数でも同じことが言えることを意味します.
+   $y=x^2$という関数について考えて見ましょう.
+   同様に先ほどの操作で平行移動することをグラフで表現すると以下のようになります.
+
+   \begin{center}
+      \begin{tikzpicture}
+         \draw[thick, ->] (-3,0) -- (3,0) node [below] {$x$};%x軸
+         \draw[thick, ->] (0,-1) -- (0,4) node [left] {$y$};%y軸
+         \node at (0,0) [anchor=north east] {O};
+         \draw[domain=-2:2] plot (\x, \x * \x);
+         \draw[domain=-1.4142:1.4142] plot (\x + 1, \x * \x + 2);
+         \draw[->] (0,0) -- (1,0) node [below][pos=0.5] {$+1$};
+         \draw[->] (1,0) -- (1,2) node [right][pos=0.5] {$+2$};
+      \end{tikzpicture}
+   \end{center}
+
+   平行移動した後の関数がどういった式で表現できるかと言うと,
+   $x$に$x-1$, $y$に$y-2$を代入すれば元どおり等式が成り立つはずなので,
+   $$y-2=(x-1)^2$$
+   となり, 式を綺麗に整えると$y=(x-1)^2+2$となります.
+
+   同様に,
+   $y=x^2$のグラフの全ての点を方向は保ったまま原点からの距離を2倍にしたい場合を考えてみましょう。
+   座標$(x,y)$に対する原点からの距離を2倍にした点の座標は$(2x,2y)$です.
+   先ほどと同じで等式を成り立たせるためには$x$に$\frac{1}{2}x$を,
+   $y$に$\frac{1}{2}y$を代入すればいいので,
+   $$\frac{1}{2}y=\frac{1}{4}x^2$$
+   となり, 式を綺麗に整えると$y=\frac{1}{2}x^2$となります.
+   
+   次は座標$(2,2)$を原点からの距離はそのままで,
+   時計と反対回りに$\ang{60}$回転させた位置の座標について考えてみましょう.
+   
+   \begin{center}
+      \begin{tikzpicture}
+         \draw[thick, ->] (-3,0) -- (3,0) node [below] {$x$};%x軸
+         \draw[thick, ->] (0,-1) -- (0,4) node [left] {$y$};%y軸
+         \coordinate(O) at (0,0) node at (0,0) [anchor=north east] {O};
+         \coordinate(A) at (2,2) node [right] at (A) {$(2,2)$};
+         \coordinate(B) at (-0.73205,2.73205) node [right] at (B) {$(?,?)$};
+         \fill (A) circle (2pt);
+         \fill (B) circle (2pt);
+         \draw (B)--(O)--(A);
+         \draw (0.3, 0.3) arc [start angle=45, end angle=128, radius=0.3];
+         \node at (0.2,0.6) {$\ang{60}$};
+      \end{tikzpicture}
+   \end{center}
+
+   ここで思い出して欲しいのが三角比です.
+   正弦は斜辺分の高さで,
+   余弦は斜辺分の底辺でした.
+   斜辺が1の場合は正弦がそのまま高さになり,
+   余弦はそのまま底辺になります.
+
+   正弦と余弦は座標平面ではそのまま半径1の円上の座標になります.
+   どういうことかと言うと,
+   半径1の円上の点$P$の座標は,
+   点$P$と原点を結ぶ直線と$x$軸のなす角を$\theta$としたとき,
+   $(\cos{\theta}, \sin{\theta})$となります.
+
+   この性質を使っていきましょう.
+   まず半径1の円上の性質だったため,
+   半径1の円に持ち込む必要があります.
+   どんな点も各座標を原点からの距離で割ることで,
+   原点からの距離が1になり,
+   半径1の円上の点となります.
+   座標$(2,2)$の場合,
+   原点からの距離は$2\sqrt{2}$なので,
+   $(\frac{1}{\sqrt{2}},\frac{1}{\sqrt{2}})$が方向は同じでかつ半径1の円上の点となります.
+   ここからわかることは$(2,2)$と原点を結ぶ直線と$x$軸のなす角を$\theta$としたとき,
+   $$\cos{\theta}=\frac{1}{\sqrt{2}}, \sin\theta=\frac{1}{\sqrt{2}}$$
+   ということです.
+
+   次に求めたい座標のある方向を$x$軸からの角度で考えて見ると,
+   先ほどの$\theta$を使って,
+   $\theta+\ang{60}$であることがわかります.
+   つまり,
+   $(\cos\theta+\ang{60},\sin\theta+\ang{60})$を求めれば,
+   あとは長さを調節するだけとなります.
+   加法定理を使うと,
+   $$\left(\frac{1-\sqrt{3}}{2\sqrt{2}},\frac{1+\sqrt{3}}{2\sqrt{2}}\right)$$
+   となります.
+   
+   最後に原点からの距離を$(2,2)$と同じにする必要があるので,
+   $2\sqrt{2}$をかけることによって,
+   求める座標は,
+   $$\left(1-\sqrt{3},1+\sqrt{3}\right)$$
+   であることがわかります.
+
+   \begin{problem}
+      座標$(-1,4)$を$x$軸方向に$-1$, $y$軸方向に$2$平行移動した点の座標を答えよ.
+   \end{problem}
+   \begin{problem}
+      関数$y=x^3+x$を$x$軸方向に$2$倍, $y$軸方向に$3$倍引き伸ばした関数を答えよ.
+   \end{problem}
+   \begin{problem}
+      座標$(x,2^x)$を原点からの距離はそのままに時計回りに$\ang(30)$回転させた点の座標を答えよ.
+   \end{problem}
+   \begin{problem}
+      任意の点$(x,y)$について, $(x,y)=a(1,0)+b(1,2)$となる実数の組$(a,b)$が存在することを証明せよ.
+   \end{problem}
+
+   \newpage
+
+   \section{行列の正体}
+
+   Sさん「座標平面を復習しましたけど,
+   これが行列と何の関係があるんですか？」
+
+   T先生「実は行列っていうのは,
+   さっきからやっていた座標変換そのものなんだ.」
+
+   Sさん「うーん,
+   すみません,
+   ピンときていません...」
+
+   T先生「さっきまでの座標変換はそれぞれ違う手法があって,
+   あまり共通した処理という気がしなかっただろう？」
+
+   Sさん「そうですね,
+   平行移動, 引き伸ばし, 回転とそれぞれにやり方があるイメージです.」
+
+   T先生「実はその全ての処理は行列でしかなく,
+   行列の積で表現できてしまうんだ.」
+
+   Sさん「なるほど！それぞれの処理に対してどう対応するかではなく,
+   座標変換といえばこうするという1つの対応方法で対応できてしまうということですね.」
+
+   T先生「そういうこと！こういう風にバラバラなものの共通した性質を抜き出してまとめることを一般化というよ.
+   行列はあらゆる座標変換の一般化になっているわけだ.」
+
+\end{document}

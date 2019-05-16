@@ -1,3 +1,8 @@
 .idea/
 /venv/
-
+/行列/*.fls
+/行列/*.aux
+/行列/*.dvi
+/行列/*.fdb_latexmk
+/行列/*.log
+/行列/*.toc
