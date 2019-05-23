@@ -1,0 +1,102 @@
+\documentclass[a4paper,12pt]{jreport}
+\usepackage{ascmac}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{amsthm}
+\usepackage{blkarray}
+\usepackage{latexsym}
+\usepackage[dvipdfmx]{graphicx}
+\usepackage{tikz}
+\usepackage{bm}
+\usetikzlibrary{arrows.meta}
+\usetikzlibrary{intersections,calc}
+\newcounter{nombre}
+
+\makeatletter
+\def\Left#1#2\Right{\begingroup%
+   \def\ts@r{\nulldelimiterspace=0pt \mathsurround=0pt}%
+   \let\@hat=#1%
+   \def\sht@im{#2}%
+   \def\@t{{\mathchoice{\def\@fen{\displaystyle}\k@fel}%
+          {\def\@fen{\textstyle}\k@fel}%
+          {\def\@fen{\scriptstyle}\k@fel}%
+          {\def\@fen{\scriptscriptstyle}\k@fel}}}%
+   \def\g@rin{\ts@r\left\@hat\vphantom{\sht@im}\right.}%
+   \def\k@fel{\setbox0=\hbox{$\@fen\g@rin$}\hbox{%
+      $\@fen \kern.3875\wd0 \copy0 \kern-.3875\wd0%
+      \llap{\copy0}\kern.3875\wd0$}}%
+      \def\pt@h{\mathopen\@t}\pt@h\sht@im%
+      \Right}%
+\def\Right#1{\let\@hat=#1%
+   \def\st@m{\mathclose\@t}%
+   \st@m\endgroup}
+\makeatother
+
+\def \tp {{\rm tp}}
+\def \stp{{\rm stp}}
+\def \acl {{\rm acl}}
+\def \dcl {{\rm dcl}}
+\def \cl {{\rm cl}}
+\def \ccl {{\rm ccl}}
+
+\def \dom {{\rm dom}}
+\def \ran {{\rm ran}}
+\def \ind {\mathop{\smile \hskip -0.9em ^| \ }}
+\def \dep {\mathop{\not \!\! \ind}}
+\def \non-ort {{\not\!\!\bot}}
+\def \domeq {\sqsubseteq\!\!\!\!\sqsupseteq}
+
+\def \Th {{\rm Th}}
+\def \RM {{\rm RM}}
+\def \Z  {{\mathbb Z}}
+\def \N {{\mathbb N}}
+\def \Q {{\mathbb Q}}
+\def \R {{\mathbb R}}
+\def \C {{\mathbb C}}
+\def \M {{\cal M}}
+\def \U {{\rm U}}
+\def \S#1 {{\rm S}#1 }
+\def \lh{{\rm lh}}
+
+\def \ob {{\rm Ob}}
+\def \id {{\rm id}}
+
+\def \imp {{\Rightarrow}}
+\def \notequiv {{\hskip 0.1em \not\hskip -0.1em \leftrightarrow}}
+\def \tie{ \,{\widehat { \ }}\, }
+
+\def\proclaim #1. #2\par{\medbreak
+  \noindent{\bf#1 \enspace}{\sl#2}\par
+  \ifdim\lastskip<\medskipamount \removelastskip\penalty55\medskip\fi}
+\renewcommand\thefootnote{*\arabic{footnote}}
+\newtheorem{theo}{Theorem}[section]
+\newtheorem{coro}[theo]{Corollary}
+\newtheorem{prop}[theo]{Proposition}
+\newtheorem{rem}[theo]{Remark}
+\newtheorem{exam}[theo]{example}
+\newtheorem{exer}[theo]{Exercise}
+\newtheorem{lem}[theo]{Lemma}
+\newtheorem{fact}{fact}
+\newtheorem{claim}{Claim}[theo]
+\newtheorem{problem}{問}[chapter]
+\renewcommand{\theclaim}{\Alph{claim}}
+\renewcommand{\thefact}{}
+\newtheorem{shelah}{Shelah's conjecture}
+\theoremstyle{definition}
+\newtheorem{defi}{定義}
+\newcommand{\prob}[1][]{\refstepcounter{nombre}#1(\thenombre)}
+\newcommand{\ang}[1]{#1^\circ}
+\renewcommand{\theshelah}{}
+
+\title{行列について解答編}
+\author{中川路 玄哉}
+
+\begin{document}
+\chapter{行列とは？}
+\begin{problem}
+    各座標に足すことで平行移動を表現できます.
+    $$
+    (-1+(-1),4+2)=(-2,6)
+    $$
+\end{problem}
+\end{document}
