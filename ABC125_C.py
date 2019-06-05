@@ -4,8 +4,7 @@ import functools
 
 
 def delete_one(index: int, a: list) -> list:
-    del a[index]
-    return a
+    return (a[index:] + a[:index])[1:]
 
 
 def gcd_list(numbers: list) -> int:
@@ -15,5 +14,7 @@ def gcd_list(numbers: list) -> int:
 n = int(input())
 a_list = list(map(int, input().split()))
 
-p = list(map(gcd_list, map(functools.partial(delete_one, a=a_list), range(n))))
-print(p)
+p2 = list(map(functools.partial(delete_one, a=a_list), range(n)))
+print(p2)
+p1 = list(map(gcd_list, p2))
+print(p1)
