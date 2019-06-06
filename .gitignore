@@ -6,3 +6,5 @@
 /行列/*.fdb_latexmk
 /行列/*.log
 /行列/*.toc
+/Task1/__pycache__
+/Task1/User.csv
