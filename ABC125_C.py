@@ -1,23 +1,19 @@
-import fractions
-import functools
+import math
 from functools import reduce
+import functools
 
 
-def shift(index: int, l: list) -> list:
-    return l[index:] + l[:index]
-
-
-def not_see_one(index: int, a: list) -> iter:
-    ret = shift(index, a)
-    return ret[1:]
+def delete_one(index: int, a: list) -> list:
+    del a[index]
+    return a
 
 
 def gcd_list(numbers: list) -> int:
-    return reduce(fractions.gcd, numbers)
+    return reduce(math.gcd, numbers)
 
 
 n = int(input())
 a_list = list(map(int, input().split()))
 
-result = max(map(gcd_list, map(functools.partial(not_see_one, a=a_list), range(n))))
-print(result)
+p = list(map(gcd_list, map(functools.partial(delete_one, a=a_list), range(n))))
+print(p)
