@@ -15,7 +15,7 @@ class UserRepository:
             f.close()
             self.__users_list = list(map(self.string_to_object, lines))
         except FileNotFoundError:
-            print("ファイルが見つかりませんでした。")
+            print("User.csvファイルが存在しません。")
             sys.exit()
         except IOError:
             print("ファイルの読み込みに失敗しました。")
